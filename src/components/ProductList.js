@@ -23,6 +23,7 @@ const ProductList = () => {
 
   return (
     <div className="product-list">
+      <h1 className="black-friday-title">Ofertas Black Friday</h1>
       <InstantSearch
         searchClient={algoliaConfig.searchClient}
         indexName={algoliaConfig.indexName}

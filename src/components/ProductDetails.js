@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { addToCart } from "../utils/cartUtils";
 
@@ -6,6 +6,8 @@ const ProductDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { product } = location.state || {};
+
+  const [showModal, setShowModal] = useState(false);
 
   if (!product) {
     return (
@@ -18,11 +20,24 @@ const ProductDetails = () => {
 
   const handleAddToCart = () => {
     addToCart(product);
-    alert("Producto añadido al carrito");
+    setShowModal(true);
+    setTimeout(() => setShowModal(false), 2000);
   };
 
   return (
     <div style={styles.container}>
+      {/* Modal Mejorado */}
+      {showModal && (
+        <div style={styles.modalOverlay}>
+          <div style={styles.modalContent}>
+            <div style={styles.modalIcon}>
+              ✅
+            </div>
+            <p style={styles.modalText}>¡Producto añadido al carrito!</p>
+          </div>
+        </div>
+      )}
+
       <div style={styles.imageContainer}>
         <img
           src={product.image}
@@ -61,6 +76,38 @@ const styles = {
     backgroundColor: "#fff",
     borderRadius: "10px",
     boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+  },
+  modalOverlay: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 1000,
+    animation: "fadeIn 0.3s ease",
+  },
+  modalContent: {
+    backgroundColor: "#ffffff",
+    padding: "30px",
+    borderRadius: "12px",
+    textAlign: "center",
+    boxShadow: "0 8px 20px rgba(0, 0, 0, 0.2)",
+    width: "300px",
+    animation: "scaleUp 0.3s ease",
+  },
+  modalIcon: {
+    fontSize: "3rem",
+    color: "#28a745",
+    marginBottom: "15px",
+  },
+  modalText: {
+    fontSize: "1.2rem",
+    fontWeight: "bold",
+    color: "#333",
   },
   imageContainer: {
     width: "100%",
@@ -113,6 +160,7 @@ const styles = {
     borderRadius: "5px",
     cursor: "pointer",
     fontSize: "1rem",
+    transition: "background-color 0.3s ease",
   },
   backButton: {
     padding: "10px 15px",
@@ -123,6 +171,15 @@ const styles = {
     borderRadius: "5px",
     cursor: "pointer",
     fontSize: "1rem",
+    transition: "background-color 0.3s ease",
+  },
+  "@keyframes fadeIn": {
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+  },
+  "@keyframes scaleUp": {
+    from: { transform: "scale(0.8)" },
+    to: { transform: "scale(1)" },
   },
 };
 
