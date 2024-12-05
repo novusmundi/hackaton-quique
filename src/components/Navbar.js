@@ -7,8 +7,7 @@ const Navbar = () => {
         <h1 style={styles.logoText}>ByteCrafters</h1>
       </div>
       <ul style={styles.navLinks}>
-        <li style={styles.navItem}><a href="/" style={styles.navLink}>Inicio</a></li>
-        <li style={styles.navItem}><a href="/products" style={styles.navLink}>Productos</a></li>
+        <li style={styles.navItem}><a href="/" style={styles.navLink}>Inicio</a></li>        
         <li style={styles.navItem}><a href="/about" style={styles.navLink}>Sobre Nosotros</a></li>
         <li style={styles.navItem}><a href="/cart" style={styles.navLink}>Carrito</a></li>
       </ul>

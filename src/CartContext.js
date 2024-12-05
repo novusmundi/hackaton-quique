@@ -6,10 +6,12 @@ export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
 
   const addToCart = (product) => {
-    setCart((prevCart) => [...prevCart, product]);
+    console.log("Añadiendo producto al carrito:", product); // Log para verificar el producto
+    setCart((prevCart) => [...prevCart, product]); // Agrega el producto al estado del carrito
   };
 
   const removeFromCart = (id) => {
+    console.log("Eliminando producto con ID:", id);
     setCart((prevCart) => prevCart.filter((item) => item.objectID !== id));
   };
 

@@ -1,12 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { CartContext } from "../CartContext";
+import { addToCart } from "../utils/cartUtils";
 
 const ProductDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { product } = location.state || {};
-  const { addToCart } = useContext(CartContext);
 
   if (!product) {
     return (
@@ -16,6 +15,11 @@ const ProductDetails = () => {
       </div>
     );
   }
+
+  const handleAddToCart = () => {
+    addToCart(product);
+    alert("Producto añadido al carrito");
+  };
 
   return (
     <div style={styles.container}>
@@ -35,7 +39,7 @@ const ProductDetails = () => {
         <p style={styles.productCategory}>
           <strong>Categoría:</strong> {product.category || "No especificada."}
         </p>
-        <button onClick={() => addToCart(product)} style={styles.addButton}>
+        <button onClick={handleAddToCart} style={styles.addButton}>
           Añadir al Carrito
         </button>
         <button onClick={() => navigate("/")} style={styles.backButton}>
@@ -45,27 +49,8 @@ const ProductDetails = () => {
     </div>
   );
 };
+
 const styles = {
-  addButton: {
-    padding: "10px 15px",
-    margin: "10px 5px",
-    backgroundColor: "#28a745",
-    color: "#fff",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-    fontSize: "1rem",
-  },
-  backButton: {
-    padding: "10px 15px",
-    margin: "10px 5px",
-    backgroundColor: "#007bff",
-    color: "#fff",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-    fontSize: "1rem",
-  },
   container: {
     display: "flex",
     flexDirection: "column",
@@ -119,33 +104,25 @@ const styles = {
     marginBottom: "20px",
     color: "#555",
   },
-  backButton: {
-    display: "inline-block",
-    padding: "10px 20px",
-    fontSize: "1rem",
+  addButton: {
+    padding: "10px 15px",
+    margin: "10px 5px",
+    backgroundColor: "#28a745",
     color: "#fff",
-    backgroundColor: "#007bff",
     border: "none",
     borderRadius: "5px",
     cursor: "pointer",
-    textDecoration: "none",
-    transition: "background-color 0.3s ease",
+    fontSize: "1rem",
   },
-  backButtonHover: {
-    backgroundColor: "#0056b3",
-  },
-  errorContainer: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    height: "100vh",
-    textAlign: "center",
-  },
-  errorText: {
-    fontSize: "1.5rem",
-    marginBottom: "20px",
-    color: "#d9534f",
+  backButton: {
+    padding: "10px 15px",
+    margin: "10px 5px",
+    backgroundColor: "#007bff",
+    color: "#fff",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+    fontSize: "1rem",
   },
 };
 

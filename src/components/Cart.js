@@ -1,8 +1,22 @@
-import React, { useContext } from "react";
-import { CartContext } from "../CartContext";
+import React, { useEffect, useState } from "react";
+import { getCart, removeFromCart, clearCart } from "../utils/cartUtils";
 
 const Cart = () => {
-  const { cart, removeFromCart } = useContext(CartContext);
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    setCart(getCart());
+  }, []);
+
+  const handleRemove = (id) => {
+    removeFromCart(id);
+    setCart(getCart());
+  };
+
+  const handleClear = () => {
+    clearCart();
+    setCart([]);
+  };
 
   if (cart.length === 0) {
     return <div style={styles.emptyCart}>El carrito está vacío.</div>;
@@ -19,7 +33,7 @@ const Cart = () => {
               <h2 style={styles.itemName}>{item.name}</h2>
               <p style={styles.itemPrice}>${item.price}</p>
               <button
-                onClick={() => removeFromCart(item.objectID)}
+                onClick={() => handleRemove(item.objectID)}
                 style={styles.removeButton}
               >
                 Eliminar
@@ -28,6 +42,9 @@ const Cart = () => {
           </li>
         ))}
       </ul>
+      <button onClick={handleClear} style={styles.clearButton}>
+        Limpiar Carrito
+      </button>
     </div>
   );
 };
@@ -75,6 +92,14 @@ const styles = {
   removeButton: {
     padding: "5px 10px",
     backgroundColor: "#dc3545",
+    color: "#fff",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+  },
+  clearButton: {
+    padding: "10px 15px",
+    backgroundColor: "#007bff",
     color: "#fff",
     border: "none",
     borderRadius: "5px",
